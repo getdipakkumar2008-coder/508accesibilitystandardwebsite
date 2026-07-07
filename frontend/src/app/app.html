@@ -1,0 +1,47 @@
+<!-- Skip link: first focusable element, lets keyboard/SR users jump to content -->
+<a class="usa-skipnav" href="#main-content">Skip to main content</a>
+
+<header class="usa-header usa-header--basic">
+  <div class="usa-nav-container">
+    <div class="usa-navbar">
+      <span class="usa-logo">
+        <a routerLink="/" [title]="title">{{ title }}</a>
+      </span>
+    </div>
+    <nav class="usa-nav" aria-label="Primary navigation">
+      <ul class="usa-nav__primary usa-accordion">
+        <li class="usa-nav__primary-item">
+          <a
+            routerLink="/"
+            routerLinkActive="usa-current"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="usa-nav__link"
+          >
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="usa-nav__primary-item">
+          <a routerLink="/contact" routerLinkActive="usa-current" class="usa-nav__link">
+            <span>Contact</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+  <router-outlet />
+</main>
+
+<footer class="usa-footer usa-footer--slim">
+  <div class="grid-container usa-footer__return-to-top">
+    <a href="#main-content">Return to top</a>
+  </div>
+  <div class="usa-footer__primary-section">
+    <div class="grid-container">
+      <p class="usa-footer__logo-heading">{{ title }}</p>
+      <p>Committed to Section 508 and WCAG 2.1 AA conformance.</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      OpenAPI/Swagger intentionally omitted for now: the templated
+      Microsoft.AspNetCore.OpenApi 10.x pulls a vulnerable Microsoft.OpenApi 2.x
+      (GHSA-v5pm-xwqc-g5wc), and the fixed 3.x is incompatible with the 10.x
+      source generator. Re-add with a compatible, patched version in a later phase.
+    -->
+  </ItemGroup>
+
+</Project>

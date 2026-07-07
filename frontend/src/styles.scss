@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+/*
+ * Accessibility enhancements layered on top of USWDS:
+ * - A strong, high-visibility focus indicator for keyboard users (WCAG 2.4.7).
+ * - Respect the user's reduced-motion preference (WCAG 2.3.3 / 2.2.2).
+ */
+:focus-visible {
+  outline: 0.25rem solid #2491ff; /* USWDS blue-40v */
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

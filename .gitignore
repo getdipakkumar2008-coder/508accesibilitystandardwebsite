@@ -1,0 +1,18 @@
+# .NET build output
+[Bb]in/
+[Oo]bj/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# Test / coverage artifacts
+coverage/
+TestResults/
+
+# Editor / OS
+.vs/
+*.user
+.DS_Store
+Thumbs.db
