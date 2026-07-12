@@ -1,6 +1,8 @@
 .app-navigation__toggle {
   display: inline-flex;
   margin-bottom: var(--ds-space-sm);
+  min-height: 2.75rem;
+  min-width: 2.75rem;
 }
 
 .app-navigation__panel {
@@ -15,6 +17,12 @@
   display: flex;
   flex-direction: column;
   gap: var(--ds-space-xs);
+}
+
+.app-navigation__list .usa-nav__link {
+  align-items: center;
+  display: inline-flex;
+  min-height: 2.75rem;
 }
 
 @media (min-width: 40rem) {

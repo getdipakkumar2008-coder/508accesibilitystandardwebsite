@@ -1,24 +1,56 @@
-<section class="usa-hero" aria-label="Introduction">
-  <div class="grid-container">
-    <div class="usa-hero__callout">
-      <h1 class="usa-hero__heading">Accessible services for everyone</h1>
-      <p>
-        This site is built to meet Section 508 and WCAG 2.1 AA standards so every visitor can find
-        information and complete tasks, regardless of ability or assistive technology.
-      </p>
-      <a class="usa-button" routerLink="/contact">Contact us</a>
+<div class="home-page">
+  <section class="usa-hero" aria-labelledby="home-hero-heading">
+    <div class="grid-container">
+      <div class="usa-hero__callout">
+        <h1 id="home-hero-heading" class="usa-hero__heading">Accessible services for everyone</h1>
+        <p>
+          This site is built to meet Section 508 and WCAG 2.1 AA standards so every visitor can find
+          information and complete tasks, regardless of ability or assistive technology.
+        </p>
+        <app-button type="button" (buttonClick)="goToContact()">Contact us</app-button>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="usa-section">
-  <div class="grid-container">
-    <h2>How we build for accessibility</h2>
-    <ul class="usa-list">
-      <li>Full keyboard operability with a clear, visible focus indicator.</li>
-      <li>Semantic HTML structure and landmarks for screen reader users.</li>
-      <li>Sufficient color contrast and content that reflows at 400% zoom.</li>
-      <li>Descriptive labels, accessible error messages, and status announcements.</li>
-    </ul>
-  </div>
-</section>
+  <section class="usa-section" aria-labelledby="home-quick-links-heading">
+    <div class="grid-container">
+      <h2 id="home-quick-links-heading">Quick links</h2>
+      <ul class="usa-card-group">
+        @for (link of quickLinks; track link.path) {
+          <li class="tablet:grid-col-4 usa-card">
+            <div class="usa-card__container">
+              <div class="usa-card__header">
+                <h3 class="usa-card__heading">{{ link.title }}</h3>
+              </div>
+              <div class="usa-card__body">
+                <p>{{ link.description }}</p>
+              </div>
+              <div class="usa-card__footer">
+                <a [routerLink]="link.path" class="usa-link">Go to {{ link.title }}</a>
+              </div>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="usa-section" aria-labelledby="home-search-heading">
+    <div class="grid-container">
+      <h2 id="home-search-heading">Search this site</h2>
+      <form class="usa-search usa-search--big" role="search" (submit)="onSearchSubmit($event, searchInput.value)">
+        <label class="usa-label" for="home-search-input">Search for a topic or service</label>
+        <input
+          #searchInput
+          id="home-search-input"
+          class="usa-input"
+          type="search"
+          name="search"
+          placeholder="Try: accessibility statement, services, contact"
+        />
+        <app-button type="submit">Search</app-button>
+      </form>
+      <p class="usa-sr-only" aria-live="polite">{{ liveRegionMessage }}</p>
+    </div>
+  </section>
+</div>

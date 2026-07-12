@@ -35,6 +35,15 @@ describe('App', () => {
     expect(el.querySelector('footer')).toBeTruthy();
   });
 
+  it('should include footer navigation landmark', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const footerNav = (fixture.nativeElement as HTMLElement).querySelector(
+      'footer nav[aria-label="Footer navigation"]',
+    );
+    expect(footerNav).toBeTruthy();
+  });
+
   it('should have no automatically detectable accessibility violations', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();

@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.content-page-template article {
+  max-width: 64rem;
+}
+
+.content-page-template section + section {
+  margin-top: var(--ds-space-lg);
+}
+
+.content-page-template .usa-table-container--scrollable {
+  margin-top: var(--ds-space-sm);
+}

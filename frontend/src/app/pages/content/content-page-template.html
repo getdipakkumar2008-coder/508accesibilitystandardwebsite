@@ -1,0 +1,25 @@
+<div class="grid-container usa-section content-page-template">
+  <nav aria-label="Breadcrumb" class="usa-breadcrumb">
+    <ol class="usa-breadcrumb__list">
+      @for (item of breadcrumbs; track $index) {
+        <li class="usa-breadcrumb__list-item">
+          @if (item.path) {
+            <a class="usa-breadcrumb__link" [routerLink]="item.path">
+              <span>{{ item.label }}</span>
+            </a>
+          } @else {
+            <span aria-current="page">{{ item.label }}</span>
+          }
+        </li>
+      }
+    </ol>
+  </nav>
+
+  <article aria-labelledby="content-page-title">
+    <h1 id="content-page-title">{{ pageTitle }}</h1>
+    @if (intro) {
+      <p class="usa-intro">{{ intro }}</p>
+    }
+    <ng-content />
+  </article>
+</div>
