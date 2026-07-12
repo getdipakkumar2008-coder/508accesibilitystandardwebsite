@@ -1,0 +1,29 @@
+<div class="usa-form-group" [class.usa-form-group--error]="!!error">
+  <label class="usa-label" [attr.for]="id">
+    {{ label }}
+    @if (required) {
+      <span class="usa-hint">(required)</span>
+    }
+  </label>
+
+  @if (hint) {
+    <span class="usa-hint" [id]="hintId">{{ hint }}</span>
+  }
+
+  @if (error) {
+    <span class="usa-error-message" [id]="errorId">{{ error }}</span>
+  }
+
+  <input
+    class="usa-input"
+    [class.usa-input--error]="!!error"
+    [id]="id"
+    [attr.type]="type"
+    [value]="value"
+    [disabled]="disabled"
+    [attr.autocomplete]="autocomplete"
+    [attr.aria-required]="required ? 'true' : null"
+    [attr.aria-invalid]="error ? 'true' : null"
+    [attr.aria-describedby]="describedBy"
+  />
+</div>

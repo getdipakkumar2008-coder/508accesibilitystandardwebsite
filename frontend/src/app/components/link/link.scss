@@ -1,0 +1,16 @@
+.app-link {
+  color: var(--ds-color-primary);
+  display: inline-flex;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: max(2px, 0.12em);
+  text-underline-offset: 0.18em;
+}
+
+.app-link:visited {
+  color: var(--ds-color-visited);
+}
+
+.app-link[aria-disabled='true'] {
+  color: var(--ds-color-text-muted);
+  cursor: not-allowed;
+}

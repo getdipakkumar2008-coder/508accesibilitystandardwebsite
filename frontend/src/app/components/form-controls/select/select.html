@@ -1,0 +1,30 @@
+<div class="usa-form-group" [class.usa-form-group--error]="!!error">
+  <label class="usa-label" [attr.for]="id">
+    {{ label }}
+    @if (required) {
+      <span class="usa-hint">(required)</span>
+    }
+  </label>
+
+  @if (hint) {
+    <span class="usa-hint" [id]="hintId">{{ hint }}</span>
+  }
+
+  @if (error) {
+    <span class="usa-error-message" [id]="errorId">{{ error }}</span>
+  }
+
+  <select
+    class="usa-select"
+    [id]="id"
+    [disabled]="disabled"
+    [value]="value"
+    [attr.aria-required]="required ? 'true' : null"
+    [attr.aria-invalid]="error ? 'true' : null"
+    [attr.aria-describedby]="describedBy"
+  >
+    @for (option of options; track option.value) {
+      <option [value]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
+    }
+  </select>
+</div>

@@ -1,0 +1,34 @@
+<fieldset class="usa-fieldset" [attr.aria-describedby]="describedBy">
+  <legend class="usa-legend">
+    {{ legend }}
+    @if (required) {
+      <span class="usa-hint">(required)</span>
+    }
+  </legend>
+
+  @if (hint) {
+    <span class="usa-hint" [id]="hintId">{{ hint }}</span>
+  }
+
+  @if (error) {
+    <span class="usa-error-message" [id]="errorId">{{ error }}</span>
+  }
+
+  @for (option of options; track option.value; let index = $index) {
+    <div class="usa-radio">
+      <input
+        class="usa-radio__input"
+        [id]="optionId(index)"
+        type="radio"
+        [name]="name"
+        [value]="option.value"
+        [checked]="selectedValue === option.value"
+        [disabled]="option.disabled"
+        [attr.aria-required]="required ? 'true' : null"
+        [attr.aria-invalid]="error ? 'true' : null"
+        [attr.aria-describedby]="describedBy"
+      />
+      <label class="usa-radio__label" [attr.for]="optionId(index)">{{ option.label }}</label>
+    </div>
+  }
+</fieldset>

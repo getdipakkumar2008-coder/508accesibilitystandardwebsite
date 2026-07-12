@@ -1,0 +1,20 @@
+<button
+  class="usa-button app-button"
+  [class.usa-button--secondary]="variant === 'secondary'"
+  [class.usa-button--outline]="variant === 'outline'"
+  [class.app-button--danger]="variant === 'danger'"
+  [attr.type]="type"
+  [disabled]="disabled"
+  [attr.aria-disabled]="isUnavailable ? 'true' : null"
+  [attr.aria-busy]="loading ? 'true' : null"
+  [attr.aria-label]="ariaLabel"
+  (click)="onClick($event)"
+>
+  <span class="app-button__content">
+    <ng-content />
+  </span>
+  @if (loading) {
+    <span aria-hidden="true" class="app-button__status">Loading…</span>
+    <span class="usa-sr-only">Loading</span>
+  }
+</button>

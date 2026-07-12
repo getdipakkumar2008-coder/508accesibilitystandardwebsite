@@ -1,16 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@use './styles/tokens' as tokens;
 
-/*
- * Accessibility enhancements layered on top of USWDS:
- * - A strong, high-visibility focus indicator for keyboard users (WCAG 2.4.7).
- * - Respect the user's reduced-motion preference (WCAG 2.3.3 / 2.2.2).
- */
+@include tokens.emit-accessible-token-vars();
+
 :focus-visible {
-  outline: 0.25rem solid #2491ff; /* USWDS blue-40v */
-  outline-offset: 2px;
+  outline: var(--ds-focus-ring-width) solid var(--ds-focus-ring-color);
+  outline-offset: var(--ds-focus-ring-offset);
 }
 
-@media (prefers-reduced-motion: reduce) {
+@include tokens.reduced-motion() {
   *,
   *::before,
   *::after {
@@ -19,4 +16,36 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+html,
+body {
+  background-color: var(--ds-color-surface);
+  color: var(--ds-color-text);
+}
+
+body {
+  font-size: var(--ds-font-base);
+}
+
+a:not(.usa-button) {
+  text-decoration-thickness: max(2px, 0.12em);
+  text-underline-offset: 0.18em;
+}
+
+.usa-button,
+button,
+[role='button'],
+a {
+  min-height: 2.75rem;
+}
+
+.usa-button,
+button,
+a {
+  border-radius: var(--ds-radius-sm);
+}
+
+.app-dialog-open {
+  overflow: hidden;
 }

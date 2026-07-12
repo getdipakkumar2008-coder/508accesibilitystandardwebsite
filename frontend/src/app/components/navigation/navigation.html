@@ -1,0 +1,30 @@
+<nav class="app-navigation" aria-label="Primary navigation">
+  <button
+    #menuButton
+    class="usa-menu-btn app-navigation__toggle"
+    type="button"
+    aria-controls="primary-navigation-list"
+    [attr.aria-expanded]="menuOpen ? 'true' : 'false'"
+    (click)="toggleMenu()"
+  >
+    Menu
+  </button>
+
+  <div class="app-navigation__panel" [class.app-navigation__panel--open]="menuOpen">
+    <ul id="primary-navigation-list" class="usa-nav__primary usa-accordion app-navigation__list">
+      @for (item of items; track item.path) {
+        <li class="usa-nav__primary-item">
+          <a
+            #navLink
+            [routerLink]="item.path"
+            class="usa-nav__link"
+            [attr.aria-current]="isCurrent(item) ? 'page' : null"
+            (click)="closeMenu()"
+          >
+            <span>{{ item.label }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+</nav>

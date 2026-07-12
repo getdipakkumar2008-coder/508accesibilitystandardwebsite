@@ -1,0 +1,28 @@
+<div class="app-accordion">
+  @for (item of items; track item.id ?? item.heading; let index = $index) {
+    <section class="app-accordion__item">
+      <h3 class="app-accordion__heading">
+        <button
+          class="app-accordion__trigger"
+          type="button"
+          [id]="buttonId(index)"
+          [attr.aria-expanded]="isExpanded(index) ? 'true' : 'false'"
+          [attr.aria-controls]="panelId(index)"
+          (click)="toggle(index)"
+          (keydown)="onKeydown($event, index)"
+        >
+          {{ item.heading }}
+        </button>
+      </h3>
+      <div
+        class="app-accordion__panel"
+        [id]="panelId(index)"
+        role="region"
+        [attr.aria-labelledby]="buttonId(index)"
+        [hidden]="!isExpanded(index)"
+      >
+        {{ item.content }}
+      </div>
+    </section>
+  }
+</div>

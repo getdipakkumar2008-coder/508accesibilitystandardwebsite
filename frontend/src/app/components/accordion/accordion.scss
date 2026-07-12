@@ -1,0 +1,26 @@
+.app-accordion__item {
+  border-top: 1px solid var(--ds-color-border);
+}
+
+.app-accordion__item:last-child {
+  border-bottom: 1px solid var(--ds-color-border);
+}
+
+.app-accordion__heading {
+  margin: 0;
+}
+
+.app-accordion__trigger {
+  background: var(--ds-color-surface);
+  border: 0;
+  color: var(--ds-color-text);
+  cursor: pointer;
+  font-weight: 700;
+  padding: var(--ds-space-md);
+  text-align: left;
+  width: 100%;
+}
+
+.app-accordion__panel {
+  padding: 0 var(--ds-space-md) var(--ds-space-md);
+}

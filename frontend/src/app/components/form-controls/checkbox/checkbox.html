@@ -1,0 +1,28 @@
+<div class="usa-form-group" [class.usa-form-group--error]="!!error">
+  @if (hint) {
+    <span class="usa-hint" [id]="hintId">{{ hint }}</span>
+  }
+
+  @if (error) {
+    <span class="usa-error-message" [id]="errorId">{{ error }}</span>
+  }
+
+  <div class="usa-checkbox">
+    <input
+      class="usa-checkbox__input"
+      [id]="id"
+      type="checkbox"
+      [checked]="checked"
+      [disabled]="disabled"
+      [attr.aria-required]="required ? 'true' : null"
+      [attr.aria-invalid]="error ? 'true' : null"
+      [attr.aria-describedby]="describedBy"
+    />
+    <label class="usa-checkbox__label" [attr.for]="id">
+      {{ label }}
+      @if (required) {
+        <span class="usa-hint">(required)</span>
+      }
+    </label>
+  </div>
+</div>

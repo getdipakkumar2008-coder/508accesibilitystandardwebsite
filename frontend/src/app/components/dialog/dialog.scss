@@ -1,0 +1,42 @@
+.app-dialog__backdrop {
+  align-items: center;
+  background: rgb(17 24 29 / 70%);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: var(--ds-space-lg);
+  position: fixed;
+  z-index: 1000;
+}
+
+.app-dialog {
+  background: var(--ds-color-surface);
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-md);
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 20%);
+  max-width: 32rem;
+  padding: var(--ds-space-lg);
+  width: min(100%, 32rem);
+}
+
+.app-dialog__header {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--ds-space-sm);
+  justify-content: space-between;
+}
+
+.app-dialog__title {
+  margin: 0;
+}
+
+.app-dialog__close {
+  color: var(--ds-color-primary);
+  min-height: auto;
+  min-width: auto;
+  padding: var(--ds-space-2xs);
+}
+
+.app-dialog__content {
+  margin-top: var(--ds-space-md);
+}

@@ -1,0 +1,12 @@
+<a
+  class="app-link usa-link"
+  [attr.href]="disabled ? null : href"
+  [attr.target]="target"
+  [attr.rel]="rel"
+  [attr.aria-current]="ariaCurrent"
+  [attr.aria-disabled]="disabled ? 'true' : null"
+  [attr.tabindex]="disabled ? '-1' : null"
+  (click)="onClick($event)"
+>
+  <ng-content />
+</a>

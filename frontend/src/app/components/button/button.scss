@@ -1,0 +1,27 @@
+.app-button {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--ds-space-xs);
+  justify-content: center;
+}
+
+.app-button--danger {
+  background-color: var(--ds-color-danger);
+  box-shadow: inset 0 0 0 1px var(--ds-color-danger);
+  color: #fff;
+}
+
+.app-button--danger:hover,
+.app-button--danger:active {
+  background-color: var(--ds-color-danger-dark);
+}
+
+.app-button__content {
+  align-items: center;
+  display: inline-flex;
+  gap: inherit;
+}
+
+.app-button__status {
+  font-size: var(--ds-font-sm);
+}

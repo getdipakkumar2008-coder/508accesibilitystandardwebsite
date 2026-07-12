@@ -1,0 +1,32 @@
+<div class="app-tabs">
+  <div class="app-tabs__list" role="tablist" aria-label="Content sections">
+    @for (tab of tabs; track tab.id ?? tab.label; let index = $index) {
+      <button
+        class="app-tabs__tab"
+        type="button"
+        role="tab"
+        [id]="tabId(index)"
+        [attr.aria-selected]="activeIndex === index ? 'true' : 'false'"
+        [attr.aria-controls]="panelId(index)"
+        [tabIndex]="activeIndex === index ? 0 : -1"
+        (click)="selectTab(index)"
+        (keydown)="onKeydown($event, index)"
+      >
+        {{ tab.label }}
+      </button>
+    }
+  </div>
+
+  @for (tab of tabs; track tab.id ?? tab.label; let index = $index) {
+    <section
+      class="app-tabs__panel"
+      role="tabpanel"
+      [id]="panelId(index)"
+      [attr.aria-labelledby]="tabId(index)"
+      [hidden]="activeIndex !== index"
+      [tabIndex]="0"
+    >
+      {{ tab.content }}
+    </section>
+  }
+</div>
