@@ -121,6 +121,14 @@ flowchart TB
 3. Load the [Agent Skill](.github/skills/508-accessibility/SKILL.md) so tooling and reviewers apply the same accessibility rules.
 4. Ensure every change satisfies the [Definition of Done](#quality-gates--definition-of-done).
 
+## HTTPS + HSTS baseline
+
+The backend baseline is already in place in `/backend/Program.cs`:
+
+- `app.UseHttpsRedirection()` is enabled.
+- `app.UseHsts()` is enabled for non-development environments.
+- Security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Content-Security-Policy`) are applied to responses.
+
 ## Accessibility workflow
 
 ```mermaid

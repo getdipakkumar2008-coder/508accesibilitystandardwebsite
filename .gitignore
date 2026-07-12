@@ -16,3 +16,7 @@ TestResults/
 *.user
 .DS_Store
 Thumbs.db
+# Playwright artifacts
+frontend/playwright-report/
+frontend/test-results/
+
