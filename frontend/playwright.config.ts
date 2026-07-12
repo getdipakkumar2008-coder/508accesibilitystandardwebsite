@@ -19,7 +19,7 @@ export default defineConfig({
             'npx http-server dist/frontend/browser -p 4173 -a 127.0.0.1 -c-1 -P http://127.0.0.1:4173?',
           url: baseURL,
           reuseExistingServer: !process.env.CI,
-          timeout: 120_000,
+          timeout: 30_000,
         },
       }),
 });
