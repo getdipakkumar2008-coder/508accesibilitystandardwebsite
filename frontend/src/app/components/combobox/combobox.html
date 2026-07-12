@@ -1,0 +1,39 @@
+<div class="app-combobox">
+  <label class="usa-label" [attr.for]="inputId">{{ label }}</label>
+  @if (hint) {
+    <span class="usa-hint" [id]="hintId">{{ hint }}</span>
+  }
+  <input
+    class="usa-input"
+    [id]="inputId"
+    type="text"
+    role="combobox"
+    aria-autocomplete="list"
+    [value]="query"
+    [attr.aria-expanded]="expanded ? 'true' : 'false'"
+    [attr.aria-controls]="listboxId"
+    [attr.aria-activedescendant]="activeDescendant"
+    [attr.aria-describedby]="hint ? hintId : null"
+    (input)="onInput($event)"
+    (keydown)="onKeydown($event)"
+  />
+
+  @if (expanded && filteredOptions.length > 0) {
+    <ul class="app-combobox__listbox" role="listbox" [id]="listboxId">
+      @for (option of filteredOptions; track option.value; let index = $index) {
+        <li
+          class="app-combobox__option"
+          role="option"
+          [id]="optionId(index)"
+          [attr.aria-selected]="activeIndex === index ? 'true' : 'false'"
+          tabindex="-1"
+          (mousedown)="$event.preventDefault()"
+          (keydown)="onOptionKeydown($event, index)"
+          (click)="selectOption(index)"
+        >
+          {{ option.label }}
+        </li>
+      }
+    </ul>
+  }
+</div>

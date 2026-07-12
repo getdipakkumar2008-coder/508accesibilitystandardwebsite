@@ -8,25 +8,7 @@
         <a routerLink="/" [title]="title">{{ title }}</a>
       </span>
     </div>
-    <nav class="usa-nav" aria-label="Primary navigation">
-      <ul class="usa-nav__primary usa-accordion">
-        <li class="usa-nav__primary-item">
-          <a
-            routerLink="/"
-            routerLinkActive="usa-current"
-            [routerLinkActiveOptions]="{ exact: true }"
-            class="usa-nav__link"
-          >
-            <span>Home</span>
-          </a>
-        </li>
-        <li class="usa-nav__primary-item">
-          <a routerLink="/contact" routerLinkActive="usa-current" class="usa-nav__link">
-            <span>Contact</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <app-navigation />
   </div>
 </header>
 

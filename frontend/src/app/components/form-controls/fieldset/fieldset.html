@@ -1,0 +1,18 @@
+<fieldset class="usa-fieldset" [attr.aria-describedby]="describedBy">
+  <legend class="usa-legend">
+    {{ legend }}
+    @if (required) {
+      <span class="usa-hint">(required)</span>
+    }
+  </legend>
+
+  @if (hint) {
+    <span class="usa-hint" [id]="hintId">{{ hint }}</span>
+  }
+
+  @if (error) {
+    <span class="usa-error-message" [id]="errorId">{{ error }}</span>
+  }
+
+  <ng-content />
+</fieldset>
