@@ -16,11 +16,31 @@ describe('Home', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should render exactly one top-level heading', async () => {
+  it('should render a single h1 and sequential section headings', async () => {
     const fixture = TestBed.createComponent(Home);
     await fixture.whenStable();
-    const headings = (fixture.nativeElement as HTMLElement).querySelectorAll('h1');
-    expect(headings.length).toBe(1);
+
+    const host = fixture.nativeElement as HTMLElement;
+    expect(host.querySelectorAll('h1')).toHaveLength(1);
+
+    const h2s = Array.from(host.querySelectorAll('h2')).map((heading) => heading.textContent?.trim());
+    expect(h2s).toEqual(['Quick links', 'Search this site']);
+  });
+
+  it('should include an accessible search landmark and polite live region', async () => {
+    const fixture = TestBed.createComponent(Home);
+    await fixture.whenStable();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const searchForm = host.querySelector('form[role="search"]');
+    const searchInput = host.querySelector('#home-search-input');
+    const searchLabel = host.querySelector('label[for="home-search-input"]');
+    const liveRegion = host.querySelector('[aria-live="polite"]');
+
+    expect(searchForm).toBeTruthy();
+    expect(searchInput).toBeTruthy();
+    expect(searchLabel).toBeTruthy();
+    expect(liveRegion).toBeTruthy();
   });
 
   it('should have no automatically detectable accessibility violations', async () => {

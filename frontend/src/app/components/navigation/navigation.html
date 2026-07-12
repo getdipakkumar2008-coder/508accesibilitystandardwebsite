@@ -17,8 +17,11 @@
           <a
             #navLink
             [routerLink]="item.path"
+            [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+            routerLinkActive
+            #routerLinkActiveState="routerLinkActive"
             class="usa-nav__link"
-            [attr.aria-current]="isCurrent(item) ? 'page' : null"
+            [attr.aria-current]="routerLinkActiveState.isActive ? 'page' : null"
             (click)="closeMenu()"
           >
             <span>{{ item.label }}</span>

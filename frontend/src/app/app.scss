@@ -5,3 +5,18 @@
 main {
   padding-bottom: var(--ds-space-2xl);
 }
+
+.usa-logo a,
+.app-footer-nav a,
+.usa-footer__return-to-top a {
+  align-items: center;
+  display: inline-flex;
+  min-height: 2.75rem;
+}
+
+.app-footer-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-sm);
+  margin: var(--ds-space-sm) 0 0;
+}

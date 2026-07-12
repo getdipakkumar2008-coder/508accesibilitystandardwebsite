@@ -1,5 +1,12 @@
-import { Component, ElementRef, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 export interface NavigationItem {
   label: string;
@@ -16,18 +23,18 @@ export interface NavigationItem {
  */
 @Component({
   selector: 'app-navigation',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navigation.html',
   styleUrl: './navigation.scss',
 })
 export class Navigation {
-  private readonly router = inject(Router);
-
   @ViewChild('menuButton') private menuButton?: ElementRef<HTMLButtonElement>;
   @ViewChildren('navLink') private navLinks?: QueryList<ElementRef<HTMLAnchorElement>>;
 
   readonly items: readonly NavigationItem[] = [
     { label: 'Home', path: '/', exact: true },
+    { label: 'About', path: '/about' },
+    { label: 'Services', path: '/services' },
     { label: 'Contact', path: '/contact' },
   ];
 
@@ -35,7 +42,7 @@ export class Navigation {
 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
-    queueMicrotask(() => {
+    window.setTimeout(() => {
       if (this.menuOpen) {
         this.navLinks?.first?.nativeElement.focus();
       } else {
@@ -50,13 +57,13 @@ export class Navigation {
     }
 
     this.menuOpen = false;
-    queueMicrotask(() => this.menuButton?.nativeElement.focus());
+    window.setTimeout(() => this.menuButton?.nativeElement.focus());
   }
 
-  isCurrent(item: NavigationItem): boolean {
-    return this.router.isActive(
-      this.router.createUrlTree([item.path]),
-      item.exact ? { paths: 'exact', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' } : { paths: 'subset', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored' },
-    );
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    if (this.menuOpen) {
+      this.closeMenu();
+    }
   }
 }

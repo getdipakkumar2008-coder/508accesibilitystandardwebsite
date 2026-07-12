@@ -1,3 +1,17 @@
 :host {
   display: block;
 }
+
+.home-page .usa-card__container {
+  height: 100%;
+}
+
+.home-page .usa-card__footer a {
+  align-items: center;
+  display: inline-flex;
+  min-height: 2.75rem;
+}
+
+.home-page .usa-search {
+  max-width: 40rem;
+}
