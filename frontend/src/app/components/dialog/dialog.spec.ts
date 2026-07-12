@@ -31,7 +31,10 @@ describe('Dialog', () => {
     document.body.appendChild(trigger);
     trigger.focus();
 
-    (fixture.componentInstance as any).returnFocusTo = trigger;
+    const dialogWithFocusTarget = fixture.componentInstance as unknown as {
+      returnFocusTo: HTMLElement | null;
+    };
+    dialogWithFocusTarget.returnFocusTo = trigger;
     fixture.componentInstance.title = 'Confirm action';
     fixture.componentInstance.isOpen = true;
     fixture.detectChanges();
