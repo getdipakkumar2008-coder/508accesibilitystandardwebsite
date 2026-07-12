@@ -42,7 +42,7 @@ export class Navigation {
 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
-    window.setTimeout(() => {
+    this.deferFocus(() => {
       if (this.menuOpen) {
         this.navLinks?.first?.nativeElement.focus();
       } else {
@@ -57,7 +57,7 @@ export class Navigation {
     }
 
     this.menuOpen = false;
-    window.setTimeout(() => this.menuButton?.nativeElement.focus());
+    this.deferFocus(() => this.menuButton?.nativeElement.focus());
   }
 
   @HostListener('document:keydown.escape')
@@ -65,5 +65,16 @@ export class Navigation {
     if (this.menuOpen) {
       this.closeMenu();
     }
+  }
+
+  private deferFocus(fn: () => void): void {
+    queueMicrotask(() => {
+      if (typeof requestAnimationFrame === 'function') {
+        requestAnimationFrame(() => fn());
+        return;
+      }
+
+      fn();
+    });
   }
 }

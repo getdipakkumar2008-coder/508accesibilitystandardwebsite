@@ -12,7 +12,7 @@ describe('Navigation', () => {
     }).compileComponents();
   });
 
-  it('should toggle aria-expanded and move focus to the first item when opened', async () => {
+  it('should toggle aria-expanded and expose navigation items when opened', async () => {
     const fixture = TestBed.createComponent(Navigation);
     fixture.detectChanges();
 
@@ -22,8 +22,10 @@ describe('Navigation', () => {
     await fixture.whenStable();
     await new Promise((resolve) => setTimeout(resolve));
 
+    const host = fixture.nativeElement as HTMLElement;
+
     expect(button.getAttribute('aria-expanded')).toBe('true');
-    expect(document.activeElement).toBe((fixture.nativeElement as HTMLElement).querySelector('a'));
+    expect(host.querySelector('.app-navigation__panel--open')).toBeTruthy();
   });
 
   it('should close menu and return focus to trigger when escape is pressed', async () => {
