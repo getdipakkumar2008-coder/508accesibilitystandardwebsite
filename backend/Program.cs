@@ -5,6 +5,9 @@ const string FrontendCorsPolicy = "FrontendCorsPolicy";
 // Add services to the container.
 builder.Services.AddControllers();
 
+// OpenAPI document generation (served at /openapi/v1.json).
+builder.Services.AddOpenApi();
+
 // Restrict cross-origin access to the known accessible front-end origin(s).
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
     ?? new[] { "http://localhost:4200" };
@@ -20,7 +23,12 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    // Expose the generated OpenAPI document only in development.
+    app.MapOpenApi();
+}
+else
 {
     // HTTP Strict Transport Security in non-development environments.
     app.UseHsts();

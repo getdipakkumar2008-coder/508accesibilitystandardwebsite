@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- OpenAPI document generation, aligned to the ASP.NET Core 10 runtime. -->
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
     <!--
-      OpenAPI/Swagger intentionally omitted for now: the templated
-      Microsoft.AspNetCore.OpenApi 10.x pulls a vulnerable Microsoft.OpenApi 2.x
-      (GHSA-v5pm-xwqc-g5wc), and the fixed 3.x is incompatible with the 10.x
-      source generator. Re-add with a compatible, patched version in a later phase.
+      Pin the transitive Microsoft.OpenApi to a patched 2.x release (>= 2.7.5)
+      that fixes GHSA-v5pm-xwqc-g5wc / CVE-2026-49451. Staying on the 2.x line
+      keeps compatibility with the ASP.NET Core 10 OpenAPI source generator.
     -->
+    <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
   </ItemGroup>
 
 </Project>
