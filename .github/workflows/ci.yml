@@ -6,9 +6,12 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   frontend:
-    name: Frontend (lint, a11y tests, build)
+    name: Frontend (lint, tests, a11y, build, e2e)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -18,24 +21,66 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 22.11.x
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint (includes template accessibility rules)
+      - name: Lint (includes Angular template accessibility rules)
         run: npm run lint
 
-      - name: Unit + accessibility tests (axe)
+      - name: Unit tests (Vitest)
         run: npm run test:ci
 
-      - name: Production build
+      - name: Build Angular app
         run: npm run build
 
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Serve built app
+        run: |
+          npx http-server dist/frontend/browser -p 4173 -a 127.0.0.1 -c-1 -P http://127.0.0.1:4173? > /tmp/frontend-http-server.log 2>&1 &
+          echo $! > /tmp/frontend-http-server.pid
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0
+            if ! kill -0 "$(cat /tmp/frontend-http-server.pid)" 2>/dev/null; then
+              cat /tmp/frontend-http-server.log
+              exit 1
+            fi
+            sleep 1
+          done
+          cat /tmp/frontend-http-server.log
+          exit 1
+
+      - name: Pa11y checks
+        run: |
+          npx pa11y http://127.0.0.1:4173/ --config pa11y.json
+          npx pa11y http://127.0.0.1:4173/contact --config pa11y.json
+
+      - name: Axe-core checks (Playwright)
+        run: E2E_BASE_URL=http://127.0.0.1:4173 npm run e2e:ci
+
+      - name: Lighthouse CI (accessibility)
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            http://127.0.0.1:4173/
+            http://127.0.0.1:4173/contact
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      - name: Stop built app server
+        if: always()
+        run: |
+          if [ -f /tmp/frontend-http-server.pid ]; then
+            kill "$(cat /tmp/frontend-http-server.pid)" || true
+          fi
+
   backend:
-    name: Backend (build, tests, security audit)
+    name: Backend (.NET build and tests)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -44,14 +89,22 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Restore
-        run: dotnet restore backend.Tests/Backend.Tests.csproj
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
-      - name: Build (Release)
-        run: dotnet build backend.Tests/Backend.Tests.csproj --no-restore --configuration Release
+      - name: Restore backend
+        working-directory: backend
+        run: dotnet restore Backend.csproj
 
-      - name: Test
-        run: dotnet test backend.Tests/Backend.Tests.csproj --no-build --configuration Release
+      - name: Build backend
+        working-directory: backend
+        run: dotnet build Backend.csproj --no-restore --configuration Release
 
-      - name: Vulnerable package audit
-        run: dotnet list backend/Backend.csproj package --vulnerable --include-transitive
+      - name: Test backend
+        working-directory: backend.Tests
+        run: dotnet test Backend.Tests.csproj --configuration Release

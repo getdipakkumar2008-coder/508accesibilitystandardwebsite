@@ -72,11 +72,11 @@ flowchart LR
 ### Phase 0 — Foundations
 | # | Task | Maps to | Status |
 | --- | --- | --- | --- |
-| 0.1 | Initialize Git repo, branching strategy, PR templates | NFR-MAINT-1 | ☐ |
-| 0.2 | Configure HTML/CSS/JS linters + `jsx-a11y` (or equivalent) | Coding standards | ☐ |
-| 0.3 | Add axe-core, Pa11y, Lighthouse CI to pipeline | 10.1 | ☐ |
-| 0.4 | Provision dev/staging/prod; HTTPS + HSTS baseline | 6.4, NFR-SEC-1 | ☐ |
-| 0.5 | Wire unit/integration + Playwright E2E scaffolding | 10.2 | ☐ |
+| 0.1 | Initialize Git repo, branching strategy, PR templates | NFR-MAINT-1 | ☑ |
+| 0.2 | Configure HTML/CSS/JS linters + `jsx-a11y` (or equivalent) | Coding standards | ☑ |
+| 0.3 | Add axe-core, Pa11y, Lighthouse CI to pipeline | 10.1 | ☑ |
+| 0.4 | Provision dev/staging/prod; HTTPS + HSTS baseline | 6.4, NFR-SEC-1 | ☑ |
+| 0.5 | Wire unit/integration + Playwright E2E scaffolding | 10.2 | ☑ |
 
 ### Phase 1 — Design system
 | # | Task | Maps to | Status |
