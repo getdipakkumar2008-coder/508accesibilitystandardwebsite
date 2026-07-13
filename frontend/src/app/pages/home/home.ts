@@ -45,7 +45,12 @@ export class Home {
     event.preventDefault();
     const normalizedQuery = query.trim();
     this.liveRegionMessage = normalizedQuery
-      ? `Search submitted for ${normalizedQuery}.`
+      ? `Searching for ${normalizedQuery}. Loading results.`
       : 'Search submitted. Enter a term to narrow results.';
+    if (normalizedQuery) {
+      void this.router.navigate(['/search'], { queryParams: { q: normalizedQuery } });
+    } else {
+      void this.router.navigateByUrl('/search');
+    }
   }
 }

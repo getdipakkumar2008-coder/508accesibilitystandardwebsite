@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { createUniqueId } from '../shared/unique-id';
 
 export interface ComboboxOption {
@@ -11,6 +11,8 @@ export interface ComboboxOption {
  * - Implements the APG combobox/listbox pattern.
  * - Maintains aria-expanded, aria-activedescendant, and aria-autocomplete.
  * - Supports ArrowUp/ArrowDown/Enter/Escape keyboard navigation.
+ * - Announces result counts via a polite aria-live region (role="status") as
+ *   the user types. Focus is never moved to the live region.
  */
 @Component({
   selector: 'app-combobox',
@@ -18,16 +20,36 @@ export interface ComboboxOption {
   templateUrl: './combobox.html',
   styleUrl: './combobox.scss',
 })
-export class Combobox {
+export class Combobox implements OnChanges {
   private readonly generatedId = createUniqueId('combobox');
 
   @Input() label = 'Combobox';
   @Input() hint: string | null = null;
   @Input() options: readonly ComboboxOption[] = [];
 
+  /** Pre-populate the input with an initial query value (e.g. from a URL param). */
+  @Input() set initialValue(v: string) {
+    if (v) {
+      this.query = v;
+      this.expanded = this.filteredOptions.length > 0;
+    }
+  }
+
+  /** Emits when the user selects an option from the listbox. */
+  @Output() readonly optionSelected = new EventEmitter<ComboboxOption>();
+
   query = '';
   expanded = false;
   activeIndex = -1;
+  /** Text for the polite aria-live status region. Updated on input changes. */
+  liveMessage = '';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // When options are updated externally, refresh the live message if expanded.
+    if (changes['options'] && this.expanded) {
+      this.updateLiveMessage();
+    }
+  }
 
   get inputId(): string {
     return `${this.generatedId}-input`;
@@ -39,6 +61,10 @@ export class Combobox {
 
   get hintId(): string {
     return `${this.generatedId}-hint`;
+  }
+
+  get liveRegionId(): string {
+    return `${this.generatedId}-live`;
   }
 
   get filteredOptions(): readonly ComboboxOption[] {
@@ -58,6 +84,7 @@ export class Combobox {
     this.query = (event.target as HTMLInputElement).value;
     this.expanded = true;
     this.activeIndex = this.filteredOptions.length > 0 ? 0 : -1;
+    this.updateLiveMessage();
   }
 
   onKeydown(event: KeyboardEvent): void {
@@ -97,6 +124,7 @@ export class Combobox {
     this.query = option.label;
     this.expanded = false;
     this.activeIndex = -1;
+    this.optionSelected.emit(option);
   }
 
   optionId(index: number): string {
@@ -121,5 +149,16 @@ export class Combobox {
 
     const next = this.activeIndex < 0 ? 0 : (this.activeIndex + delta + options.length) % options.length;
     this.activeIndex = next;
+  }
+
+  private updateLiveMessage(): void {
+    const count = this.filteredOptions.length;
+    if (count === 0) {
+      this.liveMessage = 'No results found.';
+    } else if (count === 1) {
+      this.liveMessage = '1 result available.';
+    } else {
+      this.liveMessage = `${count} results available.`;
+    }
   }
 }

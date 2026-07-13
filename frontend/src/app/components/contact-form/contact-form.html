@@ -19,7 +19,7 @@
       <ul class="usa-list">
         @for (err of errors(); track err.id) {
           <li>
-            <a class="usa-link" [href]="'#' + err.id" (click)="focusField($event, err.id)">
+            <a class="usa-link" [href]="'#' + (err.inputId ?? err.id)" (click)="focusField($event, err.inputId ?? err.id)">
               {{ err.label }}: {{ err.message }}
             </a>
           </li>
@@ -95,6 +95,15 @@
         [attr.aria-describedby]="isInvalid('message') ? 'message-error' : null"
       ></textarea>
     </div>
+
+    <!-- CAPTCHA: accessible non-visual verification (FR-FORM-4) -->
+    <app-captcha
+      [showError]="isInvalid('captchaAnswer')"
+      [errorMessage]="getError('captchaAnswer')"
+      (challengeKeyInit)="onCaptchaKeyInit($event)"
+      (answerChange)="onCaptchaAnswerChange($event)"
+      (fieldBlur)="onCaptchaBlur()"
+    />
 
     <button class="usa-button" type="submit">Send message</button>
   </fieldset>

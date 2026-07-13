@@ -1,0 +1,23 @@
+<div class="usa-form-group" [class.usa-form-group--error]="showError">
+  <label class="usa-label" [attr.for]="inputId">
+    {{ challenge.question }} <span class="usa-hint">(required)</span>
+  </label>
+  <span class="usa-hint" [id]="hintId">Enter the answer as a number, for example: 7</span>
+  @if (showError) {
+    <span class="usa-error-message" [id]="errorId">{{ errorMessage }}</span>
+  }
+  <input
+    class="usa-input"
+    [class.usa-input--error]="showError"
+    [id]="inputId"
+    type="text"
+    inputmode="numeric"
+    autocomplete="off"
+    [attr.aria-required]="true"
+    [attr.aria-invalid]="showError"
+    [attr.aria-describedby]="describedBy"
+    [value]="value"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+</div>

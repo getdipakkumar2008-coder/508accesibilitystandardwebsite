@@ -100,10 +100,10 @@ flowchart LR
 ### Phase 3 — Forms & search
 | # | Task | Maps to | Status |
 | --- | --- | --- | --- |
-| 3.1 | Contact form with accessible validation + error summary | FR-STR-4, FR-FORM-2 | ☐ |
-| 3.2 | Non-visual CAPTCHA alternative | FR-FORM-4 | ☐ |
-| 3.3 | Predictive search (combobox pattern, live-region results) | FR-STR-3, A11Y-R-3 | ☐ |
-| 3.4 | Server-side validation + output encoding (OWASP) | NFR-SEC-1 | ☐ |
+| 3.1 | Contact form with accessible validation + error summary | FR-STR-4, FR-FORM-2 | ☑ |
+| 3.2 | Non-visual CAPTCHA alternative | FR-FORM-4 | ☑ |
+| 3.3 | Predictive search (combobox pattern, live-region results) | FR-STR-3, A11Y-R-3 | ☑ |
+| 3.4 | Server-side validation + output encoding (OWASP) | NFR-SEC-1 | ☑ |
 
 ### Phase 4 — CMS & content
 | # | Task | Maps to | Status |
