@@ -36,4 +36,13 @@
       }
     </ul>
   }
+
+  <!-- Polite live region: announces result count as the user types without stealing focus -->
+  <p
+    class="usa-sr-only"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+    [id]="liveRegionId"
+  >{{ liveMessage }}</p>
 </div>

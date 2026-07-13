@@ -1,0 +1,18 @@
+<div class="search-page">
+  <main id="main-content" class="usa-section">
+    <div class="grid-container">
+      <h1 id="search-heading">Search this site</h1>
+      <p>Use the search field below to find pages by topic or keyword. Results appear as you type and can be selected with your keyboard or mouse.</p>
+
+      <div class="search-page__combobox-wrapper">
+        <app-combobox
+          label="Search for a topic, service, or page"
+          hint="Start typing to see matching pages"
+          [options]="searchItems"
+          [initialValue]="initialQuery"
+          (optionSelected)="onOptionSelected($event)"
+        />
+      </div>
+    </div>
+  </main>
+</div>
