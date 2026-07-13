@@ -17,9 +17,11 @@ internal static class CaptchaChallenges
 {
     /// <summary>
     /// Maps each challenge key to its expected answer (case-insensitive, trimmed).
+    /// OrdinalIgnoreCase is used for keys as well as answers so that neither
+    /// comparison is exploitable through case manipulation.
     /// </summary>
     private static readonly IReadOnlyDictionary<string, string> Answers =
-        new Dictionary<string, string>(StringComparer.Ordinal)
+        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             ["c1"] = "7",  // What is 3 plus 4?
             ["c2"] = "4",  // What is 10 minus 6?

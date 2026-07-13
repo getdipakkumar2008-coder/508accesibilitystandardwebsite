@@ -20,4 +20,10 @@
     (input)="onInput($event)"
     (blur)="onBlur()"
   />
+  <!--
+    type="text" is intentional: type="number" renders spinner controls and has
+    inconsistent screen-reader behaviour across browsers. inputmode="numeric"
+    provides a numeric soft-keyboard on mobile without those drawbacks.
+    The hint explicitly instructs users to enter a numeral.
+  -->
 </div>

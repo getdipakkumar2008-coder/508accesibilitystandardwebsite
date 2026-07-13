@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { createUniqueId } from '../shared/unique-id';
 
 export interface ComboboxOption {
@@ -20,20 +20,19 @@ export interface ComboboxOption {
   templateUrl: './combobox.html',
   styleUrl: './combobox.scss',
 })
-export class Combobox implements OnChanges {
+export class Combobox implements OnInit, OnChanges {
   private readonly generatedId = createUniqueId('combobox');
 
   @Input() label = 'Combobox';
   @Input() hint: string | null = null;
   @Input() options: readonly ComboboxOption[] = [];
 
-  /** Pre-populate the input with an initial query value (e.g. from a URL param). */
-  @Input() set initialValue(v: string) {
-    if (v) {
-      this.query = v;
-      this.expanded = this.filteredOptions.length > 0;
-    }
-  }
+  /**
+   * Pre-populate the input with an initial query value (e.g. from a URL param).
+   * Applied in `ngOnInit` so that `filteredOptions` can use the fully resolved
+   * `options` array; `ngOnChanges` handles subsequent async options updates.
+   */
+  @Input() initialValue = '';
 
   /** Emits when the user selects an option from the listbox. */
   @Output() readonly optionSelected = new EventEmitter<ComboboxOption>();
@@ -44,8 +43,21 @@ export class Combobox implements OnChanges {
   /** Text for the polite aria-live status region. Updated on input changes. */
   liveMessage = '';
 
+  ngOnInit(): void {
+    // All @Input() properties are guaranteed to be set by ngOnInit.
+    if (this.initialValue) {
+      this.query = this.initialValue;
+      this.expanded = this.filteredOptions.length > 0;
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    // When options are updated externally, refresh the live message if expanded.
+    // If options arrive asynchronously after init and we have an initialValue, re-apply.
+    if (changes['options'] && !changes['options'].isFirstChange() && this.initialValue) {
+      this.query = this.initialValue;
+      this.expanded = this.filteredOptions.length > 0;
+    }
+    // Refresh live message if options change while the listbox is open.
     if (changes['options'] && this.expanded) {
       this.updateLiveMessage();
     }
